@@ -10,23 +10,23 @@ import User from './User';
 class Home extends React.Component {
   componentDidMount() {
     this.props.requestHelloWorld();
-    this.props.requestUsers();
   }
 
   render() {
+
     return ( 
       <div>
         <h1>
           {this.props.helloWorld}
         </h1>
         <div>
-          {this.props.users && this.props.users.map((user) => (
-            <User
-            user={user}
-          />
-        ))}
-      </div>
-    </div>  
+          {this.props.users ? 
+            this.props.users.map((user) => (
+              <User user={user} key={user.id} />
+            ))
+            : <button onClick={this.props.requestUsers}>Get Users</button>}
+        </div>
+      </div>  
     );
   }
 }
