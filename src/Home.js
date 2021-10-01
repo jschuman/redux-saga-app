@@ -1,6 +1,8 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Button from 'react-bootstrap/Button';
+
 
 import { requestHelloWorld, requestUsers } from './actions';
 
@@ -24,7 +26,7 @@ class Home extends React.Component {
             this.props.users.map((user) => (
               <User user={user} key={user.id} />
             ))
-            : <button onClick={this.props.requestUsers}>Get Users</button>}
+            : <Button variant="primary" onClick={this.props.requestUsers}>Get Users</Button>}
         </div>
       </div>  
     );
