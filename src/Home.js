@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
-
+import Container from 'react-bootstrap/Container';
 
 import { requestHelloWorld, requestUsers } from './actions';
 
@@ -21,13 +21,13 @@ class Home extends React.Component {
         <h1>
           {this.props.helloWorld}
         </h1>
-        <div>
+        <Container>
           {this.props.users ? 
             this.props.users.map((user) => (
               <User user={user} key={user.id} />
             ))
             : <Button variant="primary" onClick={this.props.requestUsers}>Get Users</Button>}
-        </div>
+        </Container>
       </div>  
     );
   }
