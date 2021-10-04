@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
-import { requestHelloWorld, requestUsers, setDangerButton } from './actions';
+import { requestHelloWorld, requestUsers, clearUsers, setButtonType } from './actions';
 
 import User from './User';
 
@@ -15,8 +17,21 @@ class Home extends React.Component {
     this.props.requestHelloWorld();
   }
 
-  handleCheckboxChange(evt) {
-    this.props.setDangerButton(evt.target.checked);
+  onChangeButtonStyle(evt) {
+    this.props.setButtonType(evt.target.value);
+  }
+
+  renderUserDetails() {
+    return (
+      <div>
+        <p>
+          <Button onClick={this.props.clearUsers}>Clear Users</Button>
+        </p>
+        { this.props.users.map((user) => (
+          <User user={user} key={user.id} />
+        )) }
+      </div>
+    )
   }
 
   render() {
@@ -27,16 +42,22 @@ class Home extends React.Component {
           {this.props.helloWorld}
         </h1>
         <Container>
-          {this.props.users ? 
-            this.props.users.map((user) => (
-              <User user={user} key={user.id} />
-            ))
+          {this.props.users ? this.renderUserDetails()
             : 
-              <Form>
-                <Button variant={this.props.dangerButton ? 'danger' : 'primary'} onClick={this.props.requestUsers}>Get Users</Button>
-                <Form.Check type='checkbox' id='button-type' label='Danger Button?' 
-                  onChange={(evt) => this.props.setDangerButton(evt.target.checked)} />
-              </Form>
+              <Row className="justify-content-md-center">
+                <Col lg={2}>
+                  <Form>
+                      <p>
+                        <Button variant={this.props.buttonType} onClick={this.props.requestUsers}>Get Users</Button>
+                      </p>
+                      <Form.Select defaultValue={this.props.buttonType} onChange={this.onChangeButtonStyle.bind(this)} >
+                        {["primary", "success", "warning", "danger", "info"].map(option => (
+                            <option key={option} value={option}>Option {option}</option>
+                        ))}
+                      </Form.Select>
+                  </Form>
+                </Col>
+              </Row>
           }
         </Container>
       </div>  
@@ -44,9 +65,9 @@ class Home extends React.Component {
   }
 }
 
-const mapStatetoProps = state => ({ helloWorld: state.helloWorld, users: state.getUsers.users, dangerButton: state.dangerButton });
+const mapStatetoProps = state => ({ helloWorld: state.helloWorld, users: state.getUsers.users, buttonType: state.buttonType });
 
 const mapDispatchToProps = dispatch => 
-  bindActionCreators({ requestHelloWorld, requestUsers, setDangerButton }, dispatch);
+  bindActionCreators({ requestHelloWorld, requestUsers, clearUsers, setButtonType }, dispatch);
 
 export default connect(mapStatetoProps, mapDispatchToProps)(Home);

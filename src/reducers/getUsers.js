@@ -1,4 +1,4 @@
-import { RECEIVE_USERS } from "../actions";
+import { RECEIVE_USERS, CLEAR_USERS } from "../actions";
 
 const getUsers = (state={}, {type, users}) => {
   switch(type) {
@@ -7,6 +7,11 @@ const getUsers = (state={}, {type, users}) => {
         ...state,
         users
       };
+    case CLEAR_USERS:
+      return {
+        ...state,
+        users: null
+      };  
     default:
       return state;
   }

@@ -11,7 +11,7 @@ const user = ({ user }) => (
           <p>{user.email}</p>
           <p>{user.street}</p>
           <p>{user.address.city}, {user.address.zipcode}</p>
-          <a href={user.website}>My Website</a>
+          <a href={`http://${user.website}`}>My Website</a>
         </Card.Body>
       </Card>
     </Col>
