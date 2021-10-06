@@ -1,6 +1,5 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -9,10 +8,11 @@ import Button from 'react-bootstrap/Button';
 import { requestUser } from './actions';
 
 function User(props) {
+  const dispatch = useDispatch();
   let user = props.user;
 
   const onClickSelect = () => {
-    props.requestUser(props.user.id);
+    dispatch(requestUser(props.user.id));
   }
 
   return ( 
@@ -33,7 +33,4 @@ function User(props) {
   )
 }
 
-const mapDispatchToProps = (dispatch) => 
-  bindActionCreators({ requestUser }, dispatch);
-
-export default connect(null, mapDispatchToProps)(User);
+export default connect(null, null)(User);
