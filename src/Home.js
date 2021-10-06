@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { requestHelloWorld, requestUsers, clearUsers, clearUser, setButtonType } from './actions';
+import { requestHelloWorld, requestUsers, clearUsers, setButtonType } from './actions';
 
 import User from './User';
 
@@ -23,7 +23,6 @@ class Home extends React.Component {
 
   onClickClearUsers() {
     this.props.clearUsers();
-    this.props.clearUser();
   }
 
   renderUserDetails() {
@@ -80,13 +79,13 @@ class Home extends React.Component {
 const mapStatetoProps = state => (
   { 
     helloWorld: state.helloWorld, 
-    users: state.getUsers.users, 
+    users: state.users.all, 
     buttonType: state.buttonType,
-    user: state.getUser.user 
+    user: state.users.user 
   }
 );
 
 const mapDispatchToProps = dispatch => 
-  bindActionCreators({ requestHelloWorld, requestUsers, clearUsers, clearUser, setButtonType }, dispatch);
+  bindActionCreators({ requestHelloWorld, requestUsers, clearUsers, setButtonType }, dispatch);
 
 export default connect(mapStatetoProps, mapDispatchToProps)(Home);

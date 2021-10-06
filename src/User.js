@@ -15,6 +15,14 @@ function User(props) {
     dispatch(requestUser(props.user.id));
   }
 
+  const onClickDelete = () => {
+    if (window.confirm(`Are you sure you want to delete ${props.user.name}?`)) {
+      console.log('delete the user');
+    } else {
+      console.log('DON\'T delete the user');
+    }
+  }
+
   return ( 
     <Row className="justify-content-md-center">
       <Col lg={6}>
@@ -25,7 +33,8 @@ function User(props) {
             <p>{user.street}</p>
             <p>{user.address.city}, {user.address.zipcode}</p>
             <p><a href={`http://${user.website}`}>My Website</a></p>
-            <Button variant='success' onClick={onClickSelect}>Select</Button>
+            <p><Button variant='success' onClick={onClickSelect}>Select</Button></p>
+            <p><Button variant='danger' onClick={onClickDelete}>Delete</Button></p>
           </Card.Body>
         </Card>
       </Col>
