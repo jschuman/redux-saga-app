@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { requestHelloWorld, requestUsers, clearUsers, setButtonType } from './actions';
+import { requestHelloWorld, requestUsers, clearUsers, clearUser, setButtonType } from './actions';
 
 import User from './User';
 
@@ -21,11 +21,16 @@ class Home extends React.Component {
     this.props.setButtonType(evt.target.value);
   }
 
+  onClickClearUsers() {
+    this.props.clearUsers();
+    this.props.clearUser();
+  }
+
   renderUserDetails() {
     return (
       <div>
         <p>
-          <Button onClick={this.props.clearUsers}>Clear Users</Button>
+          <Button onClick={this.onClickClearUsers.bind(this)}>Clear Users</Button>
         </p>
         { this.props.users.map((user) => (
           <User user={user} key={user.id} />
@@ -41,6 +46,13 @@ class Home extends React.Component {
         <h1>
           {this.props.helloWorld}
         </h1>
+        {this.props.user ? 
+          <h3>
+            Currently Selected User is: {this.props.user.name}
+          </h3>
+          :
+          ""
+        }
         <Container>
           {this.props.users ? this.renderUserDetails()
             : 
@@ -65,9 +77,16 @@ class Home extends React.Component {
   }
 }
 
-const mapStatetoProps = state => ({ helloWorld: state.helloWorld, users: state.getUsers.users, buttonType: state.buttonType });
+const mapStatetoProps = state => (
+  { 
+    helloWorld: state.helloWorld, 
+    users: state.getUsers.users, 
+    buttonType: state.buttonType,
+    user: state.getUser.user 
+  }
+);
 
 const mapDispatchToProps = dispatch => 
-  bindActionCreators({ requestHelloWorld, requestUsers, clearUsers, setButtonType }, dispatch);
+  bindActionCreators({ requestHelloWorld, requestUsers, clearUsers, clearUser, setButtonType }, dispatch);
 
 export default connect(mapStatetoProps, mapDispatchToProps)(Home);

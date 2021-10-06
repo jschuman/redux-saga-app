@@ -1,7 +1,9 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects'
 
-import { REQUEST_HELLO_WORLD, receiveHelloWorld, REQUEST_USERS, receiveUsers } from './actions';
-import fetchData from './api';
+import { REQUEST_HELLO_WORLD, receiveHelloWorld, 
+  REQUEST_USERS, receiveUsers,
+  REQUEST_USER, receiveUser } from './actions';
+import { fetchUsersData, fetchUserData } from './api';
 
 // worker Saga: will be fired on REQUEST_HELLO_WORLD actions
 function* helloWorld(action) {
@@ -20,9 +22,8 @@ function* helloWorldSaga() {
 function* getUsers() {
   try {
     //do api call  
-    const users = yield call(fetchData);
+    const users = yield call(fetchUsersData);
     yield put(receiveUsers(users));
-    //yield put(receiveUsers([{id: 1, name: 'jeff', email: 'j@s.com'}]));
   } catch (e) {
     console.log("Error: " + e);
   }
@@ -32,10 +33,26 @@ function* watchGetUsers() {
   yield takeLatest(REQUEST_USERS, getUsers);
 }
 
+// worker Saga: will be fired on REQUEST_USER actions
+function* getUser(action) {
+  try {
+    //do api call  
+    const user = yield call(fetchUserData, action.userId);
+    yield put(receiveUser(user));
+  } catch (e) {
+    console.log("Error: " + e);
+  }
+}
+
+function* watchGetUser() {
+  yield takeLatest(REQUEST_USER, getUser);
+}
+
 function* rootSaga() {
   yield all([
     helloWorldSaga(),
-    watchGetUsers()
+    watchGetUsers(),
+    watchGetUser()
   ])
   // code after all-effect
 }
