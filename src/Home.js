@@ -32,7 +32,9 @@ class Home extends React.Component {
           <Button onClick={this.onClickClearUsers.bind(this)}>Clear Users</Button>
         </p>
         { this.props.users.map((user) => (
-          <User user={user} key={user.id} />
+          <p>
+            <User user={user} key={user.id} />
+          </p>
         )) }
       </div>
     )

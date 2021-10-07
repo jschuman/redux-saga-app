@@ -3,8 +3,10 @@ import { all, call, put, takeLatest } from 'redux-saga/effects'
 import { REQUEST_HELLO_WORLD, receiveHelloWorld, 
   REQUEST_USERS, receiveUsers,
   REQUEST_USER, receiveUser,
-  REQUEST_DELETE_USER, deleteUserSuccess } from './actions';
-import { fetchUsersData, fetchUserData } from './api';
+  REQUEST_DELETE_USER, deleteUserSuccess,
+  REQUEST_UPDATE_USER, updateUserSuccess
+ } from './actions';
+import { fetchUsersData, fetchUserData, deleteUser, updateUser } from './api';
 
 // worker Saga: will be fired on REQUEST_HELLO_WORLD actions
 function* helloWorld(action) {
@@ -46,11 +48,23 @@ function* getUser(action) {
 }
 
 // worker Saga: will be fired on REQUEST_DELETE_USER actions
-function* deleteUser(action) {
+function* deleteTheUser(action) {
   try {
     //do api call  
-    //const user = yield call(fetchUserData, action.userId);
+    yield call(deleteUser, action.userId);
     yield put(deleteUserSuccess(action.userId));
+  } catch (e) {
+    console.log("Error: " + e);
+  }
+}
+
+// worker Saga: will be fired on REQUEST_UPDATE_USER actions
+function* updateTheUser(action) {
+  try {
+    //do api call  
+    const user = yield call(updateUser, action.user);
+    console.log(`response from update: ${JSON.stringify(user)}`);
+    yield put(updateUserSuccess(user));
   } catch (e) {
     console.log("Error: " + e);
   }
@@ -61,7 +75,11 @@ function* watchGetUser() {
 }
 
 function* watchDeleteUser() {
-  yield takeLatest(REQUEST_DELETE_USER, deleteUser);
+  yield takeLatest(REQUEST_DELETE_USER, deleteTheUser);
+}
+
+function* watchUpdateUser() {
+  yield takeLatest(REQUEST_UPDATE_USER, updateTheUser);
 }
 
 function* rootSaga() {
@@ -69,7 +87,8 @@ function* rootSaga() {
     helloWorldSaga(),
     watchGetUsers(),
     watchGetUser(),
-    watchDeleteUser()
+    watchDeleteUser(),
+    watchUpdateUser()
   ])
   // code after all-effect
 }
