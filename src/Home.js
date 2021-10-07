@@ -53,7 +53,7 @@ class Home extends React.Component {
           ""
         }
         <Container>
-          {this.props.users ? this.renderUserDetails()
+          { (this.props.users && this.props.users.length > 0) ? this.renderUserDetails()
             : 
               <Row className="justify-content-md-center">
                 <Col lg={2}>

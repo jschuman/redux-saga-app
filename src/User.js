@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-import { requestUser } from './actions';
+import { requestUser, requestDeleteUser } from './actions';
 
 function User(props) {
   const dispatch = useDispatch();
@@ -17,9 +17,7 @@ function User(props) {
 
   const onClickDelete = () => {
     if (window.confirm(`Are you sure you want to delete ${props.user.name}?`)) {
-      console.log('delete the user');
-    } else {
-      console.log('DON\'T delete the user');
+      dispatch(requestDeleteUser(props.user.id));
     }
   }
 
