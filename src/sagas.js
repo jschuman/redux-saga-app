@@ -4,9 +4,10 @@ import { REQUEST_HELLO_WORLD, receiveHelloWorld,
   REQUEST_USERS, receiveUsers,
   REQUEST_USER, receiveUser,
   REQUEST_DELETE_USER, deleteUserSuccess,
-  REQUEST_UPDATE_USER, updateUserSuccess
+  REQUEST_PATCH_USER, updateUserSuccess,
+  REQUEST_UPDATE_USER
  } from './actions';
-import { fetchUsersData, fetchUserData, deleteUser, updateUser } from './api';
+import { fetchUsersData, fetchUserData, deleteUser, patchUser, updateUser } from './api';
 
 // worker Saga: will be fired on REQUEST_HELLO_WORLD actions
 function* helloWorld(action) {
@@ -58,12 +59,22 @@ function* deleteTheUser(action) {
   }
 }
 
+// worker Saga: will be fired on REQUEST_PATCH_USER actions
+function* patchTheUser(action) {
+  try {
+    //do api call  
+    const user = yield call(patchUser, action.user);
+    yield put(updateUserSuccess(user));
+  } catch (e) {
+    console.log("Error: " + e);
+  }
+}
+
 // worker Saga: will be fired on REQUEST_UPDATE_USER actions
 function* updateTheUser(action) {
   try {
     //do api call  
     const user = yield call(updateUser, action.user);
-    console.log(`response from update: ${JSON.stringify(user)}`);
     yield put(updateUserSuccess(user));
   } catch (e) {
     console.log("Error: " + e);
@@ -78,6 +89,10 @@ function* watchDeleteUser() {
   yield takeLatest(REQUEST_DELETE_USER, deleteTheUser);
 }
 
+function* watchPatchUser() {
+  yield takeLatest(REQUEST_PATCH_USER, patchTheUser);
+}
+
 function* watchUpdateUser() {
   yield takeLatest(REQUEST_UPDATE_USER, updateTheUser);
 }
@@ -88,6 +103,7 @@ function* rootSaga() {
     watchGetUsers(),
     watchGetUser(),
     watchDeleteUser(),
+    watchPatchUser(),
     watchUpdateUser()
   ])
   // code after all-effect

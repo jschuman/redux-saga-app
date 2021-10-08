@@ -27,16 +27,15 @@ class Home extends React.Component {
 
   renderUserDetails() {
     return (
-      <div>
-        <p>
-          <Button onClick={this.onClickClearUsers.bind(this)}>Clear Users</Button>
-        </p>
-        { this.props.users.map((user) => (
-          <p>
-            <User user={user} key={user.id} />
-          </p>
-        )) }
-      </div>
+      <Row>
+        <Col >
+          <Button className="mb-2" onClick={this.onClickClearUsers.bind(this)}>Clear Users</Button>
+          { this.props.users.map((user) => (
+              <User user={user} key={user.id} />
+          )) }
+        </Col>
+      </Row>
+        
     )
   }
 

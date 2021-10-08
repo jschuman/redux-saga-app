@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 
-import { requestUser, requestDeleteUser, requestUpdateUser } from './actions';
+import { requestUser, requestDeleteUser, requestPatchUser, requestUpdateUser } from './actions';
 
 function User(props) {
   const dispatch = useDispatch();
@@ -19,7 +19,13 @@ function User(props) {
   const onSubmit = (data) => 
   {
     data.id = user.id;
-    dispatch(requestUpdateUser(data));
+    
+    //determine func to call
+    let verb = data.verb;
+    let dispatchFunc = (verb === 'Patch' ? requestPatchUser : requestUpdateUser);
+    delete data.verb;
+
+    dispatch(dispatchFunc(data));
   }
 
   const onClickSelect = () => {
@@ -33,7 +39,7 @@ function User(props) {
   }
 
   return ( 
-    <Row className="justify-content-md-center">
+    <Row className="justify-content-md-center mb-3">
       <Col lg={6}>
         <Card>
           <Card.Body>
@@ -54,15 +60,17 @@ function User(props) {
             </Row>
             <Row>
               <Col md={ {span: 3, offset: 3} }>
-                {user.address.city}
+                {user.address?.city}
               </Col>
               <Col md={3}>
-                {user.address.zipcode}
+                {user.address?.zipcode}
               </Col>
             </Row>
             <Row>
               <Col>
-                <a href={`http://${user.website}`}>My Website</a>
+                {user.website && 
+                  <a href={`http://${user.website}`}>My Website</a>
+                }
               </Col>
             </Row>
             <Row>
@@ -78,6 +86,15 @@ function User(props) {
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Row className="mb-2">
                   <Col md={3}>
+                      <Form.Label>Name:</Form.Label>
+                  </Col>
+                  <Col>
+                      <Form.Control defaultValue={user.name} {...register("name", {required: true })} />
+                      {errors.name && <span>This field is required</span>}
+                  </Col>
+                </Row>
+                <Row className="mb-2">
+                  <Col md={3}>
                       <Form.Label>Email Address:</Form.Label>
                   </Col>
                   <Col>
@@ -91,6 +108,14 @@ function User(props) {
                   </Col>
                   <Col>
                       <Form.Control defaultValue={user.phone} {...register("phone")} />                    
+                  </Col>
+                </Row>
+                <Row className="mb-2">
+                  <Col style={ {span: 3, offset: 4} }>
+                      <div>
+                        <Form.Check name='verb' {...register("verb")} inline value='Patch' type='radio' label='Patch' />
+                        <Form.Check name='verb' {...register("verb")} inline value='Put' type='radio' label='Put' />
+                      </div>
                   </Col>
                 </Row>
                 <Row>

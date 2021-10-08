@@ -12,8 +12,8 @@ export const REQUEST_DELETE_USER = "REQUEST_DELETE_USER";
 export const DELETE_USER_SUCCESS = "DElETE_USER_SUCCESS";
 
 export const REQUEST_UPDATE_USER = "REQUEST_UPDATE_USER";
+export const REQUEST_PATCH_USER = "REQUEST_PATCH_USER";
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
-
 
 export const SET_BUTTON_TYPE = "SET_BUTTON_TYPE";
 
@@ -31,6 +31,7 @@ export const requestDeleteUser = (userId) => ({ type: REQUEST_DELETE_USER, userI
 export const deleteUserSuccess = (userId) => ({ type: DELETE_USER_SUCCESS, userId });
 
 export const requestUpdateUser = (user) => ({ type: REQUEST_UPDATE_USER, user });
+export const requestPatchUser = (user) => ({ type: REQUEST_PATCH_USER, user });
 export const updateUserSuccess = (user) => ({ type: UPDATE_USER_SUCCESS, user });
 
 export const setButtonType = buttonType => ({ type: SET_BUTTON_TYPE, buttonType });
