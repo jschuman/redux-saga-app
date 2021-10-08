@@ -113,7 +113,7 @@ function User(props) {
                 <Row className="mb-2">
                   <Col style={ {span: 3, offset: 4} }>
                       <div>
-                        <Form.Check name='verb' {...register("verb")} inline value='Patch' type='radio' label='Patch' />
+                        <Form.Check name='verb' {...register("verb")} inline value='Patch' type='radio' label='Patch' defaultChecked />
                         <Form.Check name='verb' {...register("verb")} inline value='Put' type='radio' label='Put' />
                       </div>
                   </Col>
