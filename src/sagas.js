@@ -23,7 +23,7 @@ function* helloWorldSaga() {
 }
 
 // worker Saga: will be fired on REQUEST_USERS actions
-function* getUsers() {
+export function* getUsers() {
   try {
     //do api call  
     const all = yield call(fetchUsersData);
@@ -33,7 +33,7 @@ function* getUsers() {
   }
 }
 
-function* watchGetUsers() {
+export function* watchGetUsers() {
   yield takeLatest(REQUEST_USERS, getUsers);
 }
 

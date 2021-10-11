@@ -1,3 +1,5 @@
+export const RESET = "RESET";
+
 export const REQUEST_HELLO_WORLD = "REQUEST_HELLO_WORLD";
 export const RECEIVE_HELLO_WORLD = "RECEIVE_HELLO_WORLD";
 
@@ -16,6 +18,8 @@ export const REQUEST_PATCH_USER = "REQUEST_PATCH_USER";
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
 
 export const SET_BUTTON_TYPE = "SET_BUTTON_TYPE";
+
+export const reset = () => ({ type: RESET });
 
 export const requestHelloWorld = () => ({ type: REQUEST_HELLO_WORLD });
 export const receiveHelloWorld = text => ({ type: RECEIVE_HELLO_WORLD, text });

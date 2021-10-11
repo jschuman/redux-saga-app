@@ -28,7 +28,7 @@ class Home extends React.Component {
   renderUserDetails() {
     return (
       <Row>
-        <Col >
+        <Col>
           <Button className="mb-2" onClick={this.onClickClearUsers.bind(this)}>Clear Users</Button>
           { this.props.users.map((user) => (
               <User user={user} key={user.id} />
@@ -59,9 +59,7 @@ class Home extends React.Component {
               <Row className="justify-content-md-center">
                 <Col lg={2}>
                   <Form>
-                      <p>
-                        <Button variant={this.props.buttonType} onClick={this.props.requestUsers}>Get Users</Button>
-                      </p>
+                      <Button className="mb-2" variant={this.props.buttonType} onClick={this.props.requestUsers}>Get Users</Button>
                       <Form.Select defaultValue={this.props.buttonType} onChange={this.onChangeButtonStyle.bind(this)} >
                         {["primary", "success", "warning", "danger", "info"].map(option => (
                             <option key={option} value={option}>Option {option}</option>

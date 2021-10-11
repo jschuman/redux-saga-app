@@ -4,8 +4,17 @@ import helloWorld from './helloWorld';
 import users from './users';
 import buttonType from './buttonType';
 
-export default combineReducers({
-    helloWorld,
-    users,
-    buttonType
+const appReducer = combineReducers({
+  helloWorld,
+  users,
+  buttonType
 });
+
+export default function rootReducer(state, action){
+  if (action.type === 'RESET') { // check for action type 
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+}
+  

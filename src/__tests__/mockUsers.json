@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Jeff Schuman",
+    "email": "jschuman@gmail.com",
+    "website": "jeffschuman.com"
+  },
+  {
+    "id": 2,
+    "name": "Joel Nylund",
+    "email": "jnylund@solutionstreet.com",
+    "website": "www.solutionstreet.com"
+  }
+]
