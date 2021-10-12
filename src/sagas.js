@@ -49,7 +49,7 @@ function* getUser(action) {
 }
 
 // worker Saga: will be fired on REQUEST_DELETE_USER actions
-function* deleteTheUser(action) {
+export function* deleteTheUser(action) {
   try {
     //do api call  
     yield call(deleteUser, action.userId);

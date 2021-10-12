@@ -22,7 +22,8 @@ const server = setupServer(
   rest.delete('https://jsonplaceholder.typicode.com/users/:userId', (req, resp, ctx) => {
     const { userId } = req.params;
     return resp(
-      ctx.status(200)
+      ctx.status(200),
+      ctx.json({result: 'success', userId })
     );
   }),
 
