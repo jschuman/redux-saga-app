@@ -3,6 +3,7 @@ import { setupServer } from 'msw/node';
 
 const mockUsers = require('./__tests__/mockUsers.json');
 
+//test server used when running jest tests
 const server = setupServer(
   rest.get('https://jsonplaceholder.typicode.com/users', (req, resp, ctx) => {
     return resp(
