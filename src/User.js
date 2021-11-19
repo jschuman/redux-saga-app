@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,12 +6,14 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
+import { NumberContext } from './NumberContext';
 
 import { requestUser, requestDeleteUser, requestPatchUser, requestUpdateUser } from './actions';
 
 function User(props) {
   const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const value = useContext(NumberContext)
 
   let user = props.user;
 
@@ -45,7 +47,7 @@ function User(props) {
           <Card.Body>
             <Row>
               <Col>
-                <h1>{user.name}</h1>
+                <h1>{user.name} - {value}</h1>
               </Col>
             </Row>
             <Row>
